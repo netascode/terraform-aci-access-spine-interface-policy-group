@@ -14,35 +14,72 @@ terraform {
 module "main" {
   source = "../.."
 
-  name        = "ABC"
-  alias       = "ALIAS"
-  description = "DESCR"
+  name              = "SIPG1"
+  link_level_policy = "100G"
+  cdp_policy        = "CDP-ON"
+  aaep              = "AAEP1"
 }
 
-data "aci_rest" "fvTenant" {
-  dn = "uni/tn-ABC"
+data "aci_rest" "infraSpAccPortGrp" {
+  dn = "uni/infra/funcprof/spaccportgrp-${module.main.name}"
 
   depends_on = [module.main]
 }
 
-resource "test_assertions" "fvTenant" {
-  component = "fvTenant"
+resource "test_assertions" "infraSpAccPortGrp" {
+  component = "infraSpAccPortGrp"
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.fvTenant.content.name
-    want        = "ABC"
+    got         = data.aci_rest.infraSpAccPortGrp.content.name
+    want        = module.main.name
   }
+}
 
-  equal "nameAlias" {
-    description = "nameAlias"
-    got         = data.aci_rest.fvTenant.content.nameAlias
-    want        = "ALIAS"
+data "aci_rest" "infraRsHIfPol" {
+  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rshIfPol"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "infraRsHIfPol" {
+  component = "infraRsHIfPol"
+
+  equal "tnFabricHIfPolName" {
+    description = "tnFabricHIfPolName"
+    got         = data.aci_rest.infraRsHIfPol.content.tnFabricHIfPolName
+    want        = "100G"
   }
+}
 
-  equal "descr" {
-    description = "descr"
-    got         = data.aci_rest.fvTenant.content.descr
-    want        = "DESCR"
+data "aci_rest" "infraRsCdpIfPol" {
+  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rscdpIfPol"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "infraRsCdpIfPol" {
+  component = "infraRsCdpIfPol"
+
+  equal "tnCdpIfPolName" {
+    description = "tnCdpIfPolName"
+    got         = data.aci_rest.infraRsCdpIfPol.content.tnCdpIfPolName
+    want        = "CDP-ON"
+  }
+}
+
+data "aci_rest" "infraRsAttEntP" {
+  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rsattEntP"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "infraRsAttEntP" {
+  component = "infraRsAttEntP"
+
+  equal "tDn" {
+    description = "tDn"
+    got         = data.aci_rest.infraRsAttEntP.content.tDn
+    want        = "uni/infra/attentp-AAEP1"
   }
 }
