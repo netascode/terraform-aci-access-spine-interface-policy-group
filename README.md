@@ -39,10 +39,10 @@ module "aci_access_spine_interface_policy_group" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Spine interface policy group name | `string` | n/a | yes |
-| <a name="input_link_level_policy"></a> [link\_level\_policy](#input\_link\_level\_policy) | Link level policy name | `string` | `""` | no |
-| <a name="input_cdp_policy"></a> [cdp\_policy](#input\_cdp\_policy) | CDP policy name | `string` | `""` | no |
-| <a name="input_aaep"></a> [aaep](#input\_aaep) | Attachable access entity profile name | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | Spine interface policy group name. | `string` | n/a | yes |
+| <a name="input_link_level_policy"></a> [link\_level\_policy](#input\_link\_level\_policy) | Link level policy name. | `string` | `""` | no |
+| <a name="input_cdp_policy"></a> [cdp\_policy](#input\_cdp\_policy) | CDP policy name. | `string` | `""` | no |
+| <a name="input_aaep"></a> [aaep](#input\_aaep) | Attachable access entity profile name. | `string` | `""` | no |
 
 ## Outputs
 

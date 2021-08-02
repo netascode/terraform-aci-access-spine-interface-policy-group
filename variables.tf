@@ -1,5 +1,5 @@
 variable "name" {
-  description = "Spine interface policy group name"
+  description = "Spine interface policy group name."
   type        = string
 
   validation {
@@ -9,7 +9,7 @@ variable "name" {
 }
 
 variable "link_level_policy" {
-  description = "Link level policy name"
+  description = "Link level policy name."
   type        = string
   default     = ""
 
@@ -20,7 +20,7 @@ variable "link_level_policy" {
 }
 
 variable "cdp_policy" {
-  description = "CDP policy name"
+  description = "CDP policy name."
   type        = string
   default     = ""
 
@@ -31,7 +31,7 @@ variable "cdp_policy" {
 }
 
 variable "aaep" {
-  description = "Attachable access entity profile name"
+  description = "Attachable access entity profile name."
   type        = string
   default     = ""
 
