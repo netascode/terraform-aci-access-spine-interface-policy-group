@@ -48,8 +48,8 @@ module "aci_access_spine_interface_policy_group" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `infraSpAccPortGrp` object |
-| <a name="output_name"></a> [name](#output\_name) | Spine interface policy group name |
+| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `infraSpAccPortGrp` object. |
+| <a name="output_name"></a> [name](#output\_name) | Spine interface policy group name. |
 
 ## Resources
 
