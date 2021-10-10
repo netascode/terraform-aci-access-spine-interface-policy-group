@@ -7,7 +7,7 @@ resource "aci_rest" "infraSpAccPortGrp" {
 }
 
 resource "aci_rest" "infraRsHIfPol" {
-  dn         = "${aci_rest.infraSpAccPortGrp.id}/rshIfPol"
+  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rshIfPol"
   class_name = "infraRsHIfPol"
   content = {
     tnFabricHIfPolName = var.link_level_policy
@@ -15,7 +15,7 @@ resource "aci_rest" "infraRsHIfPol" {
 }
 
 resource "aci_rest" "infraRsCdpIfPol" {
-  dn         = "${aci_rest.infraSpAccPortGrp.id}/rscdpIfPol"
+  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rscdpIfPol"
   class_name = "infraRsCdpIfPol"
   content = {
     tnCdpIfPolName = var.cdp_policy
@@ -24,7 +24,7 @@ resource "aci_rest" "infraRsCdpIfPol" {
 
 resource "aci_rest" "infraRsAttEntP" {
   count      = var.aaep != "" ? 1 : 0
-  dn         = "${aci_rest.infraSpAccPortGrp.id}/rsattEntP"
+  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rsattEntP"
   class_name = "infraRsAttEntP"
   content = {
     tDn = "uni/infra/attentp-${var.aaep}"
