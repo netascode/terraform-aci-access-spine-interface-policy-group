@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -17,7 +17,7 @@ module "main" {
   name = "SIPG1"
 }
 
-data "aci_rest" "infraSpAccPortGrp" {
+data "aci_rest_managed" "infraSpAccPortGrp" {
   dn = "uni/infra/funcprof/spaccportgrp-${module.main.name}"
 
   depends_on = [module.main]
@@ -28,7 +28,7 @@ resource "test_assertions" "infraSpAccPortGrp" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.infraSpAccPortGrp.content.name
+    got         = data.aci_rest_managed.infraSpAccPortGrp.content.name
     want        = module.main.name
   }
 }

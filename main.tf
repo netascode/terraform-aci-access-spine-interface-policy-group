@@ -1,4 +1,4 @@
-resource "aci_rest" "infraSpAccPortGrp" {
+resource "aci_rest_managed" "infraSpAccPortGrp" {
   dn         = "uni/infra/funcprof/spaccportgrp-${var.name}"
   class_name = "infraSpAccPortGrp"
   content = {
@@ -6,25 +6,25 @@ resource "aci_rest" "infraSpAccPortGrp" {
   }
 }
 
-resource "aci_rest" "infraRsHIfPol" {
-  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rshIfPol"
+resource "aci_rest_managed" "infraRsHIfPol" {
+  dn         = "${aci_rest_managed.infraSpAccPortGrp.dn}/rshIfPol"
   class_name = "infraRsHIfPol"
   content = {
     tnFabricHIfPolName = var.link_level_policy
   }
 }
 
-resource "aci_rest" "infraRsCdpIfPol" {
-  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rscdpIfPol"
+resource "aci_rest_managed" "infraRsCdpIfPol" {
+  dn         = "${aci_rest_managed.infraSpAccPortGrp.dn}/rscdpIfPol"
   class_name = "infraRsCdpIfPol"
   content = {
     tnCdpIfPolName = var.cdp_policy
   }
 }
 
-resource "aci_rest" "infraRsAttEntP" {
+resource "aci_rest_managed" "infraRsAttEntP" {
   count      = var.aaep != "" ? 1 : 0
-  dn         = "${aci_rest.infraSpAccPortGrp.dn}/rsattEntP"
+  dn         = "${aci_rest_managed.infraSpAccPortGrp.dn}/rsattEntP"
   class_name = "infraRsAttEntP"
   content = {
     tDn = "uni/infra/attentp-${var.aaep}"

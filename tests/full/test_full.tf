@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -20,7 +20,7 @@ module "main" {
   aaep              = "AAEP1"
 }
 
-data "aci_rest" "infraSpAccPortGrp" {
+data "aci_rest_managed" "infraSpAccPortGrp" {
   dn = "uni/infra/funcprof/spaccportgrp-${module.main.name}"
 
   depends_on = [module.main]
@@ -31,13 +31,13 @@ resource "test_assertions" "infraSpAccPortGrp" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.infraSpAccPortGrp.content.name
+    got         = data.aci_rest_managed.infraSpAccPortGrp.content.name
     want        = module.main.name
   }
 }
 
-data "aci_rest" "infraRsHIfPol" {
-  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rshIfPol"
+data "aci_rest_managed" "infraRsHIfPol" {
+  dn = "${data.aci_rest_managed.infraSpAccPortGrp.id}/rshIfPol"
 
   depends_on = [module.main]
 }
@@ -47,13 +47,13 @@ resource "test_assertions" "infraRsHIfPol" {
 
   equal "tnFabricHIfPolName" {
     description = "tnFabricHIfPolName"
-    got         = data.aci_rest.infraRsHIfPol.content.tnFabricHIfPolName
+    got         = data.aci_rest_managed.infraRsHIfPol.content.tnFabricHIfPolName
     want        = "100G"
   }
 }
 
-data "aci_rest" "infraRsCdpIfPol" {
-  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rscdpIfPol"
+data "aci_rest_managed" "infraRsCdpIfPol" {
+  dn = "${data.aci_rest_managed.infraSpAccPortGrp.id}/rscdpIfPol"
 
   depends_on = [module.main]
 }
@@ -63,13 +63,13 @@ resource "test_assertions" "infraRsCdpIfPol" {
 
   equal "tnCdpIfPolName" {
     description = "tnCdpIfPolName"
-    got         = data.aci_rest.infraRsCdpIfPol.content.tnCdpIfPolName
+    got         = data.aci_rest_managed.infraRsCdpIfPol.content.tnCdpIfPolName
     want        = "CDP-ON"
   }
 }
 
-data "aci_rest" "infraRsAttEntP" {
-  dn = "${data.aci_rest.infraSpAccPortGrp.id}/rsattEntP"
+data "aci_rest_managed" "infraRsAttEntP" {
+  dn = "${data.aci_rest_managed.infraSpAccPortGrp.id}/rsattEntP"
 
   depends_on = [module.main]
 }
@@ -79,7 +79,7 @@ resource "test_assertions" "infraRsAttEntP" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.infraRsAttEntP.content.tDn
+    got         = data.aci_rest_managed.infraRsAttEntP.content.tDn
     want        = "uni/infra/attentp-AAEP1"
   }
 }
